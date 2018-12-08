@@ -29,6 +29,9 @@ module.exports = {
           },
           {
             loader: 'html-loader',
+            options: {
+              attrs: ['img:src'],
+            },
           },
         ],
       },
@@ -40,6 +43,17 @@ module.exports = {
           },
           {
             loader: 'css-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(jpeg|jpg|png|gif)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[ext]',
+            },
           },
         ],
       },
