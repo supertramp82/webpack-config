@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -6,27 +8,27 @@ module.exports = {
   },
   mode: 'development',
   output: {
-    filename: '[name]-bundle.js',
+    filename: '[name]-bundle-[hash].js',
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
   },
   devServer: {
-    contentBase: 'dist',
+    contentBase: '../dist',
   },
   module: {
     rules: [
       {
-        test: /\.html$/,
+        test: /\.(js|jsx)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {
-              name: '[name].html',
-            },
+            loader: 'babel-loader',
           },
-          {
-            loader: 'extract-loader',
-          },
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.html$/,
+        use: [
           {
             loader: 'html-loader',
             options: {
@@ -37,12 +39,19 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: 'style-loader', // creates style nodes from JS strings
           },
           {
-            loader: 'css-loader',
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
           },
         ],
       },
@@ -59,4 +68,14 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: './index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name]-[hash].css',
+      chunkFilename: '[name].css',
+    }),
+  ],
 };
