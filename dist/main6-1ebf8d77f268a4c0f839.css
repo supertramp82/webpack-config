@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  background-color: #444;
-}
+  background-color: #444; }
 
 .title {
   display: flex;
@@ -11,8 +10,7 @@ body {
   font-size: 5em;
   color: white;
   font-family: Tahoma;
-  flex-flow: column;
-}
+  flex-flow: column; }
 
 img {
   border-radius: 100%;
@@ -20,5 +18,5 @@ img {
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
   -ms-border-radius: 100%;
-  -o-border-radius: 100%;
-}
+  -o-border-radius: 100%; }
+
